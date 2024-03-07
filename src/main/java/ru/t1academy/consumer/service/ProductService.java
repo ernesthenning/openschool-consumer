@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import ru.t1academy.consumer.config.RestResponsePage;
 import ru.t1academy.consumer.model.Product;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class ProductService {
     }
 
     public Page<Product> getAll(Integer offset) {
-        return restTemplate.getForObject(url + "/products?offset=" + offset, Page.class );
+        return restTemplate.getForObject(url + "/products?offset=" + offset, RestResponsePage.class );
     }
 
     public void update(Product product, int id) {
