@@ -3,6 +3,7 @@ package ru.t1academy.consumer.service;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.t1academy.consumer.model.Product;
@@ -29,12 +30,16 @@ public class ProductService {
          return restTemplate.postForEntity(url + "/products", product, Product.class).getBody();
     }
 
-    public List<Product> getAll() {
-        return restTemplate.getForObject(url + "/products", List.class );
+    public Page<Product> getAll(Integer offset) {
+        return restTemplate.getForObject(url + "/products?offset=" + offset, Page.class );
     }
 
     public void update(Product product, int id) {
         restTemplate.put(url + "/products/" + id, product);
+    }
+
+    public List<Product> search(String query) {
+        return restTemplate.getForObject(url + "/products/search?query=" + query, List.class);
     }
 
 
